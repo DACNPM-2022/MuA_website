@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Routes, Route, Link ,useLocation ,Navigate } from "react-router-dom";
+import { Routes, Route, Link } from "react-router-dom";
 import { signout } from "./actions/userActions";
 import CartScreen from "./screens/CartScreen";
 import HomeScreen from "./screens/HomeScreen";
@@ -12,23 +12,9 @@ import ShippingAddressScreen from "./screens/ShippingAddressScreen";
 import PaymentScreen from "./screens/PaymentScreen";
 import OrderScreen from "./screens/OrderScreen";
 import OrderDetailsScreen from "./screens/OrderDetailsScreen";
-import Admin from "./screens/Admin/Admin";
-import AdminLoginPage from "./screens/Admin/LoginAdminScreen/LoginAdminScreen";
+
 
 function App() {
-  return (
-    <>
-       <Routes>
-         {/*------------------------------User----------------------------------*/}
-        <Route path="/*" element={<UserApp />} />
-        {/*------------------------------Admin----------------------------------*/}
-        <Route path="/dashboard/login" element={<AdminLoginPage/>}></Route>
-        <Route path="/dashboard/*" element={<Admin />} />
-      </Routes>
-    </>
-  );
-}
-function UserApp() {
   const cart = useSelector((state) => state.cart);
   const { cartItems } = cart;
   const userSignin = useSelector((state) => state.userSignin);
@@ -98,26 +84,5 @@ function UserApp() {
     </div>
   );
 }
-function AdminApp() {
-  return (
-    <>
-      <Routes>
-        <Route path="/*" element={<Admin />} />
-      </Routes>
-    </>
-  );
-}
-function RequireAuth({ children }) {
-  let location = useLocation();
 
-  if (localStorage.todoApp_accessToken) {
-    // Redirect them to the /login page, but save the current location they were
-    // trying to go to when they were redirected. This allows us to send them
-    // along to that page after they login, which is a nicer user experience
-    // than dropping them off on the home page.
-    return <Navigate to="/admin/login" state={{ from: location }} />;
-  }
-
-  return children;
-}
 export default App;
